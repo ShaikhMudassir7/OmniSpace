@@ -684,7 +684,7 @@ app.post("/register", (req, res) => {
         password: req.body.password
     })
     userData.save().then(result => {
-        res.redirect("/home?err=false")
+        res.redirect("/")
     })
 });
 
