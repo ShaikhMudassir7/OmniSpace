@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Add Vendor | Hall and Ground</title>
+    <link href="vendor/fontawesome/css/fontawesome.min.css" rel="stylesheet">
+    <link href="vendor/fontawesome/css/solid.min.css" rel="stylesheet">
+    <link href="vendor/fontawesome/css/brands.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/master.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="img/favicon.png">
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- sidebar navigation component -->
+        <nav id="sidebar" class="active">
+            <div class="sidebar-header">
+                <img src="img/bootstraper-logo.png" height="40px" width="170px" alt="Logo" class="app-logo">
+            </div>
+            <ul class="list-unstyled components text-secondary">
+                <li>
+                    <a href="/dashboard"><i class="fas fa-home"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="/branch"><i class="fas fa-address-card"></i>Branch</a>
+                </li>
+                <li>
+                    <a href="/vendors"><i class="fas fa-cloud-download-alt"></i>Vendors</a>
+                </li>
+                <li>
+                    <a href="/halls"><i class="fas fa-archway"></i>Halls</a>
+                </li>
+                <li>
+                    <a href="#reports" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-layer-group"></i> Reports</a>
+                    <ul class="collapse list-unstyled" id="reports">
+                        <li>
+                            <a href="/pending-payments"><i class="fas fa-angle-right"></i> Pending Payments</a>
+                        </li>
+                        <li>
+                            <a href="/pending-bookings"><i class="fas fa-angle-right"></i> Pending Bookings</a>
+                        </li>
+                        <li>
+                            <a href="/booking-reports"><i class="fas fa-angle-right"></i> Booking Reports</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="/admins"><i class="fas fa-user-friends"></i>Users</a>
+                </li>
+            </ul>
+        </nav>
+        <!-- end of sidebar component -->
+        <div id="body" class="active">
+            <!-- navbar navigation component -->
+            <nav class="navbar navbar-expand-lg navbar-white bg-white">
+                <button type="button" id="sidebarCollapse" class="btn btn-light">
+                    <i class="fas fa-bars"></i><span></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav ms-auto">
+
+                        <li class="nav-item dropdown">
+                            <div class="nav-dropdown">
+                                <a href="#" id="nav2" class="nav-item nav-link dropdown-toggle text-secondary" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-user"></i> <span>Admin</span> <i style="font-size: .8em;" class="fas fa-caret-down"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end nav-link-menu">
+                                    <ul class="nav-list">
+                                        <li><a href="/logout-admin" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- end of navbar navigation -->
+            <div class="content">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">Add new vendor</div>
+                                <div class="card-body">
+                                    <form method="post" action="/add-vendor" class="needs-validation" novalidate accept-charset="utf-8">
+                                        <div class="row g-2">
+                                            <div class="mb-3 col-md-6">
+                                                <label for="vendorname" class="form-label">Vendor Name</label>
+                                                <input type="name" class="form-control" name="vendorname" placeholder="Vendor Name" required>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">Please enter vendor name.</div>
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="type" class="form-label">Vendor Type:</label>
+                                                <select name="type" class="form-select" required>
+                                                    <option value="Decorator">Decorator</option>
+                                                    <option value="Caterers">Caterers</option>
+                                                </select>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">Please select vendor type.</div>
+                                            </div>
+                                        </div>
+                                        <div class="row g-2">
+                                            <div class="mb-3 col-md-6">
+                                                <label for="cperson" class="form-label">Contact Person</label>
+                                                <input type="name" class="form-control" name="cperson" placeholder="Enter Contact Person" required>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">Please, enter Contact Person.</div>
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="phone" class="form-label">Vendor Mobile Number(s)</label>
+                                                <input type="text" maxlength="10" pattern="[789][0-9]{9}" class="form-control" name="phone" placeholder="Enter Vendor Mobile Number(s)" required>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">Please, enter Mobile Number.</div>
+                                            </div>
+                                        </div>
+                                        <div class="row g-2">
+                                            <div class="mb-3 col-md-6">
+                                                <label for="GST" class="form-label">Vendor GST Number</label>
+                                                <input type="name" pattern="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$" class="form-control" name="GST" placeholder="Enter Vendor GST Number" required>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">Please, enter Vendor GST.</div>
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="website" class="form-label">Vendor Website</label>
+                                                <input type="name" class="form-control" name="website" placeholder="Enter Vendor Website" required>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">Please, enter Vendor Website.</div>
+                                            </div>
+                                        </div>
+                                        <div class="row g-2">
+                                            <div class="mb-3 col-md-6">
+                                                <label for="vadd" class="form-label">Vendor Address</label>
+                                                <input type="name" class="form-control" name="vadd" placeholder="Enter Vendor Address" required>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">Please, enter Vendor Address.</div>
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="notes" class="form-label">Vendor Notes</label>
+                                                <input type="name" class="form-control" name="notes" placeholder="Enter Vendor Notes" required>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">Please, enter Vendor Notes.</div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Add Vendor</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/form-validator.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

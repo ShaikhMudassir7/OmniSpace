@@ -1,0 +1,58 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Register | Hall and Ground Booking</title>
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/auth.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="img/favicon.png">
+
+    <style>
+        body {
+            background-image: url('img/back.jpg');
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="auth-content">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="mb-4">
+                        <img class="brand" src="img/bootstraper-logo.png" alt="bootstraper logo">
+                    </div>
+                    <h6 class="mb-4 text-muted">Sign in to start your session!</h6>
+                    <form action="/register" method="post">
+                        <div class="mb-3 text-start">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" name="username" class="form-control" placeholder="Enter Full Name" required>
+                        </div>
+                        <div class="mb-3 text-start">
+                            <label for="mobile" class="form-label">Mobile Number</label>
+                            <input type="tel" maxlength="10" pattern="[789][0-9]{9}" name="usermob" class="form-control" placeholder="Mobile Number" required>
+                        </div>
+                        <div class="mb-3 text-start">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="useremail" class="form-control" placeholder="Enter Email Address" required>
+                        </div>
+                        <div class="mb-3 text-start">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control" placeholder="Password" required>
+                        </div>
+                        <button class="btn btn-primary shadow-2 mb-4">Register</button><br/>
+                        <a href="/">Already a user? Login Here!</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

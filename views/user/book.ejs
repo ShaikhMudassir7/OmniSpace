@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>New Booking | Hall and Ground</title>
+    <link href="vendor/fontawesome/css/fontawesome.min.css" rel="stylesheet">
+    <link href="vendor/fontawesome/css/solid.min.css" rel="stylesheet">
+    <link href="vendor/fontawesome/css/brands.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/master.css" rel="stylesheet">
+    <link href="vendor/flagiconcss/css/flag-icon.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link href="vendor/airdatepicker/css/datepicker.min.css" rel="stylesheet">
+    <link href="vendor/mdtimepicker/mdtimepicker.min.css" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'></link>
+</head>
+
+<body>
+    <div class="wrapper">
+        <nav id="sidebar" class="active">
+            <div class="sidebar-header">
+                <img src="img/bootstraper-logo.png" alt="bootraper logo" class="app-logo">
+            </div>
+            <ul class="list-unstyled components text-secondary">
+                <li>
+                    <a href="/home"><i class="fas fa-home"></i>Home</a>
+                </li>
+                <li>
+                    <a href="/booking"><i class="fas fa-address-card"></i>My Bookings</a>
+                </li>
+            </ul>
+        </nav>
+        <div id="body" class="active">
+            <!-- navbar navigation component -->
+            <nav class="navbar navbar-expand-lg navbar-white bg-white">
+                <button type="button" id="sidebarCollapse" class="btn btn-light">
+                    <i class="fas fa-bars"></i><span></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav ms-auto">
+                        <li class="nav-item dropdown">
+                            <div class="nav-dropdown">
+                                <a href="#" id="nav2" class="nav-item nav-link dropdown-toggle text-secondary" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-user"></i> <span>User</span> <i style="font-size: .8em;" class="fas fa-caret-down"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end nav-link-menu">
+                                    <ul class="nav-list">
+                                        <li><a href="/logout-user" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- end of navbar navigation -->
+            <div class="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-header">New Booking</div>
+                                <div class="card-body">
+                                    <form action="/new-booking" method="post" class="needs-validation" novalidate accept-charset="utf-8" onsubmit="return validate()">
+                                        <div class="row g-2">
+                                            <div class="mb-3 col-md-6">
+                                                <label for="cname" class="form-label">Client Name</label>
+                                                <input id="cname" type="name" class="form-control" name="cname" placeholder="Client Name" required>
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="cmob" class="form-label">Client Mobile Number</label>
+                                                <input id="cmob" type="number" class="form-control" name="cmob" placeholder="Mobile Number" required>
+                                            </div>
+                                        </div>
+                                        <div class="row g-2">
+                                            <div class="mb-3 col-md-6">
+                                                <label for="cmail" class="form-label">Client Email</label>
+                                                <input id="cmail" type="text" class="form-control" name="cmail" placeholder="Email Address" required>
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="cadd" class="form-label">Client Address</label>
+                                                <input id="cadd" type="text" class="form-control" name="cadd" placeholder="Client Address" required>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row g-2">
+                                            <div class="mb-3 col-md-6">
+                                                <label for="hall" class="form-label">Selected Hall</label>
+                                                <input id="hall" type="text" value="<%=hallData.hallname %>" class="form-control" name="hall" readonly>
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="bdate" class="form-label">Booking Date</label>
+                                                <input type="text" value="<%=bdate %>" class="form-control" name="bdate" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="row g-2">
+                                            <div class="mb-3 col-md-6">
+                                                <label for="pbook" class="form-label">Purpose of Booking</label>
+                                                <input id="pbook" type="text" class="form-control" placeholder="Purpose of Booking" name="pbook" required>
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="noofdays" class="form-label">Number of days</label>
+                                                <input id="noofdays" onchange="calculate()" id="noofdays" type="number" class="form-control" name="noofdays" placeholder="Number of days" required>
+                                            </div>
+                                        </div>
+                                        <div class="row g-2">
+                                            <div class="mb-3 col-md-6">
+                                                <label for="esd" class="form-label">Event Start Date</label>
+                                                <input id="esd" type="text" value="<%=bdate %>" name="esd" class="form-control" readonly>
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="eed" class="form-label">Event End Date</label>
+                                                <input id="eed" type="text" name="eed" class="form-control datepicker-here" data-language="en" aria-describedby="datepicker" placeholder="Enter Event End Date" required>
+                                            </div>
+                                        </div>
+                                        <div class="row g-2">
+                                            <div class="mb-3 col-md-6">
+                                                <label for="est" class="form-label">Event Start Time</label>
+                                                <input id="est" name="est" type="text" class="form-control timepicker" aria-describedby="time12" placeholder="Time picker">
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="eet" class="form-label">Event End Time</label>
+                                                <input id="eet" name="eet" type="text" class="form-control timepicker" aria-describedby="time12" placeholder="Time picker">
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row g-2">
+                                            <div class="mb-3 col-md-6">
+                                                <label for="rname" class="form-label">Reference Name</label>
+                                                <input type="text" class="form-control" placeholder="Reference Name" name="rname">
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="rmob" class="form-label">Reference Mobile</label>
+                                                <input type="text" class="form-control" name="rmob" placeholder="Reference Mobile">
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row g-2">
+                                            <div class="mb-3 col-md-6">
+                                                <label for="deco" class="form-label">Select Decorator:</label>
+                                                <select id="deco" name="deco" class="form-select" required>
+                                                    <%
+                                                        if(decoData.length!=0){
+                                                        var i=1; %>
+                                                    <option value="">Select a Decorator</option>
+                                                    <%    decoData.forEach(function(data){
+                                                    %>
+                                                    <option value="<%=data.vendorname %>"><%=data.vendorname %></option>
+                                                    <%  i++; }) %>
+                                                    <% }%>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="cat" class="form-label">Select Caterer:</label>
+                                                <select id="cat" name="cat" class="form-select" required>
+                                                    <%
+                                                        if(catData.length!=0){
+                                                        var i=1; %>
+                                                        <option value="">Select a Caterer</option>
+                                                    <%    catData.forEach(function(data){
+                                                    %>
+                                                    <option value="<%=data.vendorname %>"><%=data.vendorname %></option>
+                                                    <%  i++; }) %>
+                                                    <% }%>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row g-2">
+                                            <div class="mb-3 col-md-6">
+                                                <label for="rent" class="form-label">Hall Rent</label>
+                                                <input id="rent" type="text" value="<%=hallData.rent %>" class="form-control" name="rent" readonly>
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="sd" class="form-label">Security Deposit</label>
+                                                <input id="sd" type="text" value="<%=hallData.security %>" class="form-control" name="sd" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="row g-2">
+                                            <div class="mb-3 col-md-6">
+                                                <label for="sc" class="form-label">Service Charge</label>
+                                                <input id="sc" type="text" value="<%=hallData.scharge %>" class="form-control" name="sc" readonly>
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label for="gst" class="form-label">GST Amount</label>
+                                                <input id="gst" type="text" class="form-control" name="gst" readonly>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row g-2">
+                                            <div class="mb-3 col-md-6">
+                                                <label for="total" class="form-label">Total Payable Amount</label>
+                                                <input id="total" type="text" class="form-control" name="total" required readonly>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Book Hall</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="vendor/airdatepicker/js/datepicker.min.js"></script>
+    <script src="vendor/airdatepicker/js/i18n/datepicker.en.js"></script>
+    <script src="vendor/mdtimepicker/mdtimepicker.min.js"></script>
+    <script type="text/javascript">
+        // Initiate time picker
+        mdtimepicker('.timepicker', {
+            format: 'h:mm tt',
+            hourPadding: 'true'
+        });
+
+        $('#esd').datepicker({
+            language: 'en',
+            minDate: new Date(),
+            dateFormat: 'd/m/yyyy'
+        })
+
+        $('#eed').datepicker({
+            language: 'en',
+            minDate: new Date(),
+            dateFormat: 'd/m/yyyy'
+        })
+
+        var rent = document.getElementById("rent")
+        var initial = document.getElementById("rent").value
+        var sc = document.getElementById("sc")
+        var sd = document.getElementById("sd")
+        var gst = document.getElementById("gst")
+        var no = document.getElementById("noofdays")
+        var total = document.getElementById("total")
+
+        function calculate() {
+            rent.value = (initial * no.value);
+            gst.value = (rent.value * 18) / 100;
+            total.value = (parseInt(rent.value) + parseInt(sc.value) + parseInt(sd.value) + parseInt(gst.value))
+        }
+
+        function validate() {
+            if (document.getElementById("cname").value == "") {
+                swal("Oops!", "Please, Enter Client Name!", "error");
+                return false;
+            }
+            if (document.getElementById("cmob").value == "") {
+                swal("Oops!", "Please, Enter Mobile Number!", "error");
+                return false;
+            }
+            if (document.getElementById("cmail").value == "") {
+                swal("Oops!", "Please, Enter Email Address!", "error");
+                return false;
+            }
+            if (document.getElementById("cadd").value == "") {
+                swal("Oops!", "Please, Enter Client Address!", "error");
+                return false;
+            }
+            if (document.getElementById("pbook").value == "") {
+                swal("Oops!", "Please, Enter Purpose of Booking!", "error");
+                return false;
+            }
+            if (document.getElementById("noofdays").value == "") {
+                swal("Oops!", "Please, Enter Number of Days!", "error");
+                return false;
+            }
+            if (document.getElementById("esd").value == "") {
+                swal("Oops!", "Please, Enter Event Start Date!", "error");
+                return false;
+            }
+            if (document.getElementById("eed").value == "") {
+                swal("Oops!", "Please, Enter Event End Date!", "error");
+                return false;
+            }
+            if (document.getElementById("est").value == "") {
+                swal("Oops!", "Please, Enter Event Start Time!", "error");
+                return false;
+            }
+            if (document.getElementById("eet").value == "") {
+                swal("Oops!", "Please, Enter Event End Time!", "error");
+                return false;
+            }
+            if (document.getElementById("deco").value == "") {
+                swal("Oops!", "Please, Select a Decorator!", "error");
+                return false;
+            }
+            if (document.getElementById("cat").value == "") {
+                swal("Oops!", "Please, Select a Caterer!", "error");
+                return false;
+            }
+            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(document.getElementById("cmail").value) == false) {
+                swal("Oops!", "Please, Enter valid Email Address!", "error");
+                return false;
+            }
+            if (/^[1-9]{1}[0-9]{9}$/.test(document.getElementById("cmob").value) == false) {
+                swal("Oops!", "Please, Enter valid Mobile Number!", "error");
+                return false;
+            }
+        }
+    </script>
+</body>
+
+</html>
