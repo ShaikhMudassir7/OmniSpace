@@ -1,4 +1,5 @@
 var express = require("express");
+const http = require("http");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -7,7 +8,7 @@ const pdfGenerator = require('pdfkit')
 
 // Importing mongoose module
 var mongoose = require("mongoose");
-const port = 3000;
+const port = process.env.PORT;
 const app = express();
 
 const Admin = require("./api/models/admin")
@@ -806,7 +807,7 @@ app.get("/logout-user", (req, res) => {
     res.redirect("/")
 });
 
-// Starting the server on the 80 port
-app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
+const server = http.createServer(app);
+server.listen(port, () => {
+    console.log("Listening on port " + port);
 });
