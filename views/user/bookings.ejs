@@ -27,7 +27,18 @@
                     <a href="/home"><i class="fas fa-home"></i>Home</a>
                 </li>
                 <li>
-                    <a href="/booking"><i class="fas fa-address-card"></i>My Bookings</a>
+                    <a href="#reports" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-layer-group"></i> Reports</a>
+                    <ul class="collapse list-unstyled" id="reports">
+                        <li>
+                            <a href="/my-pending-payments"><i class="fas fa-angle-right"></i> Pending Payments</a>
+                        </li>
+                        <li>
+                            <a href="/my-pending-bookings"><i class="fas fa-angle-right"></i> Pending Bookings</a>
+                        </li>
+                        <li>
+                            <a href="/my-booking"><i class="fas fa-angle-right"></i> Booking Reports</a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </nav>
@@ -73,6 +84,7 @@
                                         <th>Booking Amount</th>
                                         <th>Payment Status</th>
                                         <th>Booking Status</th>
+                                        <th>Refund Status</th>
                                         <th>Print</th>
                                         <th>D-Print</th>
                                         <th>C-Print</th>
@@ -107,7 +119,10 @@
                                             <td>
                                                 <%=data.bstatus %>
                                             </td>
-                                            <% if (data.bstatus == "Completed"){ %>
+                                            <td>
+                                                <%=data.rstatus %>
+                                            </td>
+                                            <% if (data.bstatus == "Completed" && data.pstatus == "Completed"){ %>
                                                 <td>
                                                     <a href="/generate-booking/<%= data._id %>" target="_blank" class="btn btn-outline-success btn-rounded"><i class="fas fa-print"></i></a>
                                                 </td>
@@ -122,13 +137,17 @@
                                                     <td></td>
                                                     <td></td>
                                                     <% } %>
-                                                        <% if (data.pstatus != "Completed"){ %>
+                                                        <% if (data.pstatus != "Completed" && data.bstatus != "Completed" && data.bstatus != "Cancelled By User"){ %>
                                                             <td class="text-end">
-                                                                <a href="/delete-booking/<%= data._id%>" onclick="return ask()" class="btn btn-outline-danger btn-rounded"><i class="fas fa-trash"></i></a>
+                                                                <a href="/delete-booking/<%= data._id%>" class="btn btn-outline-danger btn-rounded"><i class="fas fa-trash"></i></a>
                                                             </td>
-                                                            <% } else { %>
-                                                                <td></td>
-                                                                <% } %>
+                                                            <% } else if (data.pstatus == "Completed" && data.bstatus == "Completed" && data.rstatus != "Completed"){ %>
+                                                                <td>
+                                                                    <a href="/refund-payment/<%= data._id%>" class="btn btn-outline-danger btn-rounded"><i class="fas fa-exchange-alt"></i></a>
+                                                                </td>
+                                                                <% } else {%>
+                                                                    <td></td>
+                                                                    <% } %>
                                         </tr>
                                         <%  i++; }) %>
                                             <% } else{ %>

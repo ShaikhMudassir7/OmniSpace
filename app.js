@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const session = require('express-session');
 const pdfGenerator = require('pdfkit')
+const multer = require('multer')
 
 // Importing mongoose module
 var mongoose = require("mongoose");
@@ -41,9 +42,24 @@ app.use('/img', express.static(__dirname + 'public/img'))
 app.use('/font', express.static(__dirname + 'public/font'))
 app.use('/vendor', express.static(__dirname + 'public/vendor'))
 app.use('/components', express.static(__dirname + 'public/components'))
+app.use('/uploads', express.static(__dirname + 'public/uploads'))
 
 app.set('views', './views')
 app.set('view engine', 'ejs')
+
+var storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'public/uploads')
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + file.originalname)
+    }
+})
+
+var upload = multer({ storage: storage })
+
+var payUpload = upload.fields([{ name: 'pslip', maxCount: 1 }])
+var refUpload = upload.fields([{ name: 'rslip', maxCount: 1 }])
 
 // Handling the get request
 app.get("/admin", (req, res) => {
@@ -89,6 +105,7 @@ app.post("/admin", (req, res) => {
 app.get("/dashboard", (req, res) => {
     if (req.session.email) {
         Book.find({
+            bstatus: "Completed",
             pstatus: "Pending"
         }).exec().then(pstatus => {
             Book.find({
@@ -108,7 +125,7 @@ app.get("/dashboard", (req, res) => {
 
 app.get("/admins", (req, res) => {
     if (req.session.email) {
-        Admin.find().select("name email mobile role branch")
+        User.find().select("username useremail usermob role branch")
             .exec()
             .then(docs => {
                 res.render('admin/admins/admins', { adminData: docs })
@@ -163,16 +180,16 @@ app.get("/edit-admin/(:id)", (req, res) => {
 });
 
 app.post("/add-admin", (req, res) => {
-    var adminData = new Admin({
+    var userData = new User({
         _id: new mongoose.Types.ObjectId(),
-        name: req.body.name,
-        mobile: req.body.mobile,
-        email: req.body.email,
-        pass: req.body.pass,
+        username: req.body.name,
+        usermob: req.body.mobile,
+        useremail: req.body.email,
+        password: req.body.pass,
         role: req.body.role,
         branch: req.body.branch
     })
-    adminData.save().then(result => {
+    userData.save().then(result => {
         res.redirect("/admins")
     })
 });
@@ -386,9 +403,19 @@ app.get("/add-hall", (req, res) => {
 });
 
 app.post("/add-hall", (req, res, next) => {
-    const hallData = new Halls(req.body)
-    hallData.save()
-    res.redirect('/halls')
+
+    var hallData = new Halls({
+        _id: new mongoose.Types.ObjectId(),
+        branchName: req.body.branchName,
+        hallname: req.body.hallname,
+        rent: req.body.rent,
+        security: req.body.security,
+        scharge: req.body.scharge,
+        GSTamount: req.body.GSTamount,
+    })
+    hallData.save().then(result => {
+        res.redirect('/halls')
+    })
 });
 
 app.get("/edit-hall/(:id)", (req, res) => {
@@ -441,8 +468,9 @@ app.get("/delete-hall/(:id)", (req, res, next) => {
 app.get("/pending-payments", (req, res) => {
     if (req.session.email) {
         Book.find({
-                pstatus: "Pending"
-            }).select("cname cmob cadd hall bdate pbook total cat deco")
+                bstatus: "Completed",
+                pstatus: "Pending",
+            }).select("cname cmob cadd hall bdate pbook total cat deco pslip modeofpayment")
             .exec()
             .then(docs => {
                 res.render('admin/reports/pending', { penData: docs })
@@ -461,7 +489,6 @@ app.get("/pending-payments", (req, res) => {
 app.get("/pending-bookings", (req, res) => {
     if (req.session.email) {
         Book.find({
-                pstatus: "Completed",
                 bstatus: "Pending"
             }).select("cname cmob cadd hall bdate pbook total cat deco")
             .exec()
@@ -481,10 +508,7 @@ app.get("/pending-bookings", (req, res) => {
 
 app.get("/booking-reports", (req, res) => {
     if (req.session.email) {
-        Book.find({
-                pstatus: "Completed",
-                bstatus: "Completed"
-            }).select("cname cmob cadd hall bdate pbook total cat deco pstatus bstatus")
+        Book.find().select("cname cmob cadd hall bdate pbook total cat deco pstatus bstatus rstatus rslip")
             .exec()
             .then(docs => {
                 res.render('admin/reports/bookreport', { bookData: docs })
@@ -520,6 +544,16 @@ app.get("/approve-booking/(:id)", (req, res) => {
     })
 });
 
+app.get("/reject-booking/(:id)", (req, res) => {
+    Book.findByIdAndUpdate(req.params.id, { bstatus: "Rejected By Admin" }, (err, doc) => {
+        if (!err) {
+            res.redirect('/pending-bookings')
+        } else {
+            res.redirect('/try-again')
+        }
+    })
+});
+
 app.get("/unauthorized-access", (req, res) => {
     res.render('admin/500.ejs')
 });
@@ -529,7 +563,9 @@ app.get("/try-again", (req, res) => {
 });
 
 
-// User Section
+/* User Section */
+
+
 app.get("/", (req, res) => {
     res.render('user/login');
 });
@@ -567,11 +603,6 @@ app.post("/user-login", (req, res) => {
                 message: error,
             });
         });
-});
-
-
-app.get("/register", (req, res) => {
-    res.render('user/register');
 });
 
 app.post("/check-availability", (req, res) => {
@@ -643,23 +674,69 @@ app.post("/new-booking", (req, res) => {
         total: req.body.total,
     })
     bookData.save().then(result => {
-        res.redirect('/booking')
+        res.redirect('/my-booking')
     })
 });
 
 app.get("/delete-booking/(:id)", (req, res, next) => {
-    Book.findByIdAndRemove(req.params.id, (err, doc) => {
+    Book.findByIdAndUpdate(req.params.id, { bstatus: "Cancelled By User" }, (err, doc) => {
         if (!err) {
-            res.redirect('/booking')
+            res.redirect('/my-booking')
+        } else {
+            res.redirect('/try-again')
         }
     })
 });
 
-app.get("/booking", (req, res) => {
+app.get("/accept-payment/(:id)", (req, res, next) => {
+    if (req.session.loggedin) {
+        res.render('user/payment', { ID: req.params.id })
+    } else {
+        res.redirect('/access-not-allowed');
+    }
+});
+
+app.post("/accept-payment", payUpload, (req, res, next) => {
+    console.log(req.files.pslip)
+    Book.findByIdAndUpdate(req.body.id, { pslip: (req.files.pslip[0].path).toString().substring(6), modeofpayment: req.body.modeofpayment }, (err, doc) => {
+        if (!err) {
+            res.redirect('/my-pending-payments')
+        } else {
+            console.log(err)
+        }
+    })
+});
+
+app.get("/refund-payment/(:id)", (req, res, next) => {
+    if (req.session.loggedin) {
+        Book.findById(req.params.id, function(err, docs) {
+            if (err) {
+                console.log(err);
+            } else {
+                res.render('user/refund', { ID: req.params.id, sd: docs.sd })
+            }
+        });
+    } else {
+        res.redirect('/access-not-allowed');
+    }
+});
+
+app.post("/refund-payment", refUpload, (req, res, next) => {
+    console.log(req.files.rslip)
+    Book.findByIdAndUpdate(req.body.id, { rslip: (req.files.rslip[0].path).toString().substring(6), rstatus: "Completed" }, (err, doc) => {
+        if (!err) {
+            res.redirect('/my-booking')
+        } else {
+            console.log(err)
+        }
+    })
+});
+
+app.get("/my-booking", (req, res) => {
     if (req.session.loggedin) {
         Book.find({
                 userID: req.session.userId
-            }).select("bdate cname hall pbook total bstatus pstatus")
+            }).select("bdate cname hall pbook total bstatus pstatus rstatus")
             .exec()
             .then(docs => {
                 res.render('user/bookings', { bookData: docs })
@@ -675,17 +752,47 @@ app.get("/booking", (req, res) => {
     }
 });
 
-app.post("/register", (req, res) => {
-    var userData = new User({
-        _id: new mongoose.Types.ObjectId(),
-        username: req.body.username,
-        usermob: req.body.usermob,
-        useremail: req.body.useremail,
-        password: req.body.password
-    })
-    userData.save().then(result => {
-        res.redirect("/")
-    })
+app.get("/my-pending-payments", (req, res) => {
+    if (req.session.loggedin) {
+        Book.find({
+                userID: req.session.userId,
+                bstatus: "Completed",
+                pstatus: "Pending"
+            }).select("cname cmob cadd hall bdate pbook total cat deco pslip")
+            .exec()
+            .then(docs => {
+                res.render('user/pending', { penData: docs })
+            })
+            .catch(err => {
+                console.log(err)
+                res.status(500).json({
+                    error: err
+                })
+            })
+    } else {
+        res.redirect('/access-not-allowed');
+    }
+});
+
+app.get("/my-pending-bookings", (req, res) => {
+    if (req.session.loggedin) {
+        Book.find({
+                userID: req.session.userId,
+                bstatus: "Pending"
+            }).select("cname cmob cadd hall bdate pbook total cat deco")
+            .exec()
+            .then(docs => {
+                res.render('user/penbooking', { bookData: docs })
+            })
+            .catch(err => {
+                console.log(err)
+                res.status(500).json({
+                    error: err
+                })
+            })
+    } else {
+        res.redirect('/access-not-allowed');
+    }
 });
 
 app.get("/home", (req, res) => {
@@ -791,6 +898,32 @@ app.get("/generate-booking/(:id)", (req, res) => {
             theOutput.font('Helvetica-Bold').text("Hon. President / Hon. General Secretary")
             theOutput.font('Helvetica-Bold').text("Anjuman-I-Islam")
             theOutput.text("--------------------------------------------------------------------------------------------------------------------------------")
+            theOutput.addPage()
+            theOutput.font('Helvetica-Bold').text("Rules and Conditions for hire of Halls and Ground of various Institutes of Anjuman-I-Islam:").moveDown()
+            theOutput.font('Helvetica').text("1. The Ground and Hall are given for wedding receptions and other social functions as a Social Service to the community. The income realized is taken as a donation for the benefit of the poor students of the Institution.").moveDown()
+            theOutput.font('Helvetica').text("2. Hall and Ground should be given only on non-working days of the school and during vacations.").moveDown()
+            theOutput.font('Helvetica').text("3. Halls and Grounds are available from morning till 12.00 mid-night.").moveDown()
+            theOutput.font('Helvetica').text("4. If the party does not vacate the premises by 12.00 mid-night, extra charges of Rs. 1,000/- per hour should be recovered.  However, functions beyond 1.00 a.m. should not be allowed to be continued.").moveDown()
+            theOutput.font('Helvetica').text("5. The decorator should remove the material immediately after the function is over.").moveDown()
+            theOutput.font('Helvetica').text("6. If the decorator does not remove the material till next morning, a penalty of Rs. 5,000/- should be recovered from the decorator.").moveDown()
+            theOutput.font('Helvetica').text("7. Charges may be levied on the caterers for Royalty based on Management decision and separate charges may be levied for cleaning the premise after the function").moveDown()
+            theOutput.font('Helvetica').text("8. No monopoly for caterer for catering services.").moveDown()
+            theOutput.font('Helvetica').text("9. No amount to be given to supervisory staff.").moveDown()
+            theOutput.font('Helvetica').text("10. The Heads of Institutions / Campus In-charge would be responsible for seeing that the function gets through smoothly and all the conditions are adhered to by the decorator/parties.  They should ensure that the G.S.T. taken from the parties are remitted to the authorities by the stipulated date which is 20th of the following month. ").moveDown()
+            theOutput.font('Helvetica').text("11. Refund of Deposit is to be made after 8 days of the function.").moveDown()
+            theOutput.font('Helvetica').text("12. Refund will be made by NEFT only after receiving the deposit receipt.").moveDown()
+            theOutput.font('Helvetica').text("13. The Booking is not transferable.").moveDown()
+            theOutput.font('Helvetica').text("14. CANCELLATION:  The Management reserves the right of refusing or cancelling the booking of ground and hall at any time without assigning any reasons whatsoever and in doing so, it shall not be held liable for any damages or compensation.  Deposit and rentals paid will be refunded.").moveDown()
+            theOutput.font('Helvetica').text("15. CANCELLATION BY PARTY: In the event of cancellation by party following deductions will be made: (This rule needs to be reviewed at Head Office, and should be based on difference between cancellation date and date for which booking is done.").moveDown()
+            theOutput.font('Helvetica').text("Within one month of booking: 10%").moveDown()
+            theOutput.font('Helvetica').text("After one month of the booking: 50%").moveDown()
+            theOutput.font('Helvetica').text("16. CHANGE OF DATE: In the event of the party deciding to shift the date of the function for some valid reason, which must be stated in writing, the new date if available will be allotted provided such information is received at least fifteen (15) days before the original booked dates of function subject to availability and levy of cancellation charge as per the rules for the original booking").moveDown()
+            theOutput.font('Helvetica').text("17. DECORATION AND HIRING OF CHAIRS, LIGHTING AND CATERING: The parties should engage decorator/electric contractor, duly approved by the Management. Anjuman-I-Islam, 92, Dr. D.N. Road, Opp. C.S.T. Mumbai – 400 001. The Electrical Contractor must obtain license from BEST for extra meter at least a week before the date of function.  Tapping or connection from any meter other than one approved by the BEST will not be allowed.").moveDown()
+            theOutput.font('Helvetica').text("18. USE OF LOUDSPEAKERS: Parties using the loudspeakers must be in possession of valid license from the concerned Superintendent of Police.  As per current regulations, loudspeakers are banned after 10.00 p.m.  Bursting of Crackers, dancing or creating nuisance is strictly prohibited.").moveDown()
+            theOutput.font('Helvetica').text("19. Catering utensils must be kept only in the permitted place of the premises and cleared immediately after the function is over.").moveDown()
+            theOutput.font('Helvetica').text("20. No cooking is allowed on the premises.").moveDown()
+            theOutput.font('Helvetica').text("21. Cost of damage, if any to the property of the institution will be recovered from the party booking the Hall/Ground, or the decorator or caterer as the case may be").moveDown()
+            theOutput.font('Helvetica').text("22. School stage, if any, is not to be removed from its place.").moveDown()
             theOutput.end()
             theOutput.pipe(res)
         }

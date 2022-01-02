@@ -103,6 +103,8 @@
                                         <th>Print</th>
                                         <th>D-Print</th>
                                         <th>C-Print</th>
+                                        <th>Refund Status</th>
+                                        <th>Refund Slip</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -145,7 +147,7 @@
                                             <td>
                                                 <%=data.bstatus %>
                                             </td>
-                                            <% if (data.bstatus == "Completed"){ %>
+                                            <% if (data.bstatus == "Completed" && data.pstatus == "Completed"){ %>
                                                 <td>
                                                     <a href="/generate-booking/<%= data._id %>" target="_blank" class="btn btn-outline-success btn-rounded"><i class="fas fa-print"></i></a>
                                                 </td>
@@ -160,7 +162,12 @@
                                                     <td></td>
                                                     <td></td>
                                                     <% } %>
-
+                                                        <td>
+                                                            <%=data.rstatus %>
+                                                        </td>
+                                                        <td>
+                                                            <img src="<%=data.rslip %>" width="250" />
+                                                        </td>
                                         </tr>
                                         <%  i++; }) %>
                                             <% } else{ %>

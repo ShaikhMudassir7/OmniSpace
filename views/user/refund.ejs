@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Refund Payment | Admin Entwicklera</title>
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/error.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="page vertical-align text-center">
+            <div class="page-content vertical-align-middle">
+                <header>
+                    <p>Refund Payment</p>
+                </header>
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">Enter the Details</div>
+                        <div class="card-body">
+                            <form action="/refund-payment" enctype="multipart/form-data" method="post">
+                                <input type="hidden" name="id" value="<%= ID %>" required>
+                                <div class="mb-3">
+                                    <input type="text" value="<%= sd %>" class="form-control" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="file" name="rslip" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="submit" value="Refund" class="btn btn-primary">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

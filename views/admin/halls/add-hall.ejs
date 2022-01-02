@@ -136,7 +136,7 @@
                                             </div>
                                             <div class="mb-3 col-md-6">
                                                 <label for="GSTamount" class="form-label">GST Amount</label>
-                                                <input id="gst" type="name" class="form-control" name="GSTamount" placeholder="Enter GST Amount" readonly>
+                                                <input id="gst" type="name" class="form-control" name="GSTamount" placeholder="Enter GST Amount" required>
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">Please, enter Vendor Website.</div>
                                             </div>
@@ -155,14 +155,6 @@
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/js/form-validator.js"></script>
     <script src="/js/script.js"></script>
-    <script>
-        var rent = document.getElementById("rent")
-        var gst = document.getElementById("gst")
-
-        function calculate() {
-            gst.value = (rent.value * 18) / 100;
-        }
-    </script>
 </body>
 
 </html>

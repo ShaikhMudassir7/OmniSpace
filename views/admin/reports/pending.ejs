@@ -98,55 +98,66 @@
                                         <th>Booking Amount</th>
                                         <th>Caterer</th>
                                         <th>Decorator</th>
+                                        <th>Mode of Payment</th>
+                                        <th>Payment Slip</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <%
+                                    <%
                                     if(penData.length!=0){
                                     var i=1;
                                     penData.forEach(function(data){
                                     %>
-                                            <tr>
-                                                <td>
-                                                    <%=data.cname %>
-                                                </td>
-                                                <td>
-                                                    <%=data.cmob %>
-                                                </td>
-                                                <td>
-                                                    <%=data.cadd %>
-                                                </td>
-                                                <td>
-                                                    <%=data.hall %>
-                                                </td>
-                                                <td>
-                                                    <%=data.bdate %>
-                                                </td>
-                                                <td>
-                                                    <%=data.pbook %>
-                                                </td>
-                                                <td>
-                                                    <%=data.total %>
-                                                </td>
-                                                <td>
-                                                    <%=data.cat %>
-                                                </td>
-                                                <td>
-                                                    <%=data.deco %>
-                                                </td>
+                                        <tr>
+                                            <td>
+                                                <%=data.cname %>
+                                            </td>
+                                            <td>
+                                                <%=data.cmob %>
+                                            </td>
+                                            <td>
+                                                <%=data.cadd %>
+                                            </td>
+                                            <td>
+                                                <%=data.hall %>
+                                            </td>
+                                            <td>
+                                                <%=data.bdate %>
+                                            </td>
+                                            <td>
+                                                <%=data.pbook %>
+                                            </td>
+                                            <td>
+                                                <%=data.total %>
+                                            </td>
+                                            <td>
+                                                <%=data.cat %>
+                                            </td>
+                                            <td>
+                                                <%=data.deco %>
+                                            </td>
+                                            <td>
+                                                <%=data.modeofpayment %>
+                                            </td>
+                                            <td>
+                                                <img src="<%=data.pslip %>" alt="Not Paid" width="250" />
+                                            </td>
+                                            <% if (data.pslip != "NA") { %>
                                                 <td class="text-end">
                                                     <a href="/approve-payment/<%=data._id %>" class="btn btn-outline-info btn-rounded"><i class="fas fa-check"></i></a>
                                                 </td>
-                                            </tr>
-                                            <%  i++; }) %>
-                                                <% } else{ %>
-                                                    <tr>
-                                                        <td colspan="9">No Pending Payments</td>
-                                                    </tr>
-                                                    <% } %>
-                                    </tr>
+                                                <% } else {%>
+                                                    <td class="text-end"></td>
+                                                    <% }%>
+                                        </tr>
+                                        <%  i++; }) %>
+                                            <% } else{ %>
+                                                <tr>
+                                                    <td colspan="12">No Pending Payments</td>
+                                                </tr>
+                                                <% } %>
+
                                 </tbody>
                             </table>
                         </div>

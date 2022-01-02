@@ -25,7 +25,11 @@ const bookSchema = mongoose.Schema({
     gst: { type: String, required: true },
     total: { type: String, required: true },
     pstatus: { type: String, default: "Pending" },
+    modeofpayment: { type: String, default: "" },
+    pslip: { type: String, default: "NA" },
     bstatus: { type: String, default: "Pending" },
+    rstatus: { type: String, default: "Pending" },
+    rslip: { type: String, default: "NA" },
 });
 
 module.exports = mongoose.model("booking", bookSchema);
