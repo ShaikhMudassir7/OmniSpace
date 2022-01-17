@@ -124,7 +124,7 @@
                                             </div>
                                             <div class="mb-3 col-md-6">
                                                 <label for="eed" class="form-label">Event End Date</label>
-                                                <input id="eed" type="text" name="eed" class="form-control datepicker-here" data-language="en" aria-describedby="datepicker" placeholder="Enter Event End Date" required>
+                                                <input id="eed" type="text" onchange="calculatedays()" name="eed" class="form-control" readonly data-language="en" aria-describedby="datepicker" placeholder="Enter Event End Date" required>
                                             </div>
                                         </div>
                                         <div class="row g-2">
@@ -231,17 +231,6 @@
             hourPadding: 'true'
         });
 
-        $('#esd').datepicker({
-            language: 'en',
-            minDate: new Date(),
-            dateFormat: 'd/m/yyyy'
-        })
-
-        $('#eed').datepicker({
-            language: 'en',
-            minDate: new Date(),
-            dateFormat: 'd/m/yyyy'
-        })
 
         var rent = document.getElementById("rent")
         var initial = document.getElementById("rent").value
@@ -249,13 +238,20 @@
         var sd = document.getElementById("sd")
         var gst = document.getElementById("gst")
         var initGST = document.getElementById("gst").value
-        var no = document.getElementById("noofdays")
+        var no = document.getElementById("noofdays");
         var total = document.getElementById("total")
+
+        var esd = document.getElementById('esd');
+        var eed = document.getElementById('eed');
 
         function calculate() {
             rent.value = (initial * no.value);
             gst.value = (initGST * no.value);
             total.value = (parseInt(rent.value) + parseInt(sc.value) + parseInt(sd.value) + parseInt(gst.value))
+            var enddate = new Date();
+            var startdate = new Date(esd.value);
+            enddate.setDate(startdate.getDate() + parseInt(no.value) - 1);
+            eed.value = enddate.toISOString().toString().replaceAll('-', '/').substring(0, 10);
         }
 
         function validate() {

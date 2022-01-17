@@ -19,6 +19,7 @@ const Halls = require("./api/models/halls");
 
 const User = require("./api/models/user");
 const Book = require("./api/models/book");
+const { vary } = require("express/lib/response");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -324,9 +325,21 @@ app.get("/add-vendor", (req, res) => {
 });
 
 app.post("/add-vendor", (req, res, next) => {
-    const vendorData = new Vendor(req.body)
-    vendorData.save()
-    res.redirect('/vendors')
+
+    var vendorData = new Vendor({
+        _id: new mongoose.Types.ObjectId(),
+        vendorname: req.body.vendorname,
+        type: req.body.type,
+        cperson: req.body.cperson,
+        vadd: req.body.vadd,
+        phone: req.body.phone,
+        GST: req.body.GST,
+        website: req.body.website,
+        notes: req.body.notes,
+    })
+    vendorData.save().then(result => {
+        res.redirect('/vendors')
+    })
 });
 
 app.get("/edit-vendor/(:id)", (req, res) => {
@@ -594,7 +607,7 @@ app.post("/user-login", (req, res) => {
                 );
                 req.session.loggedin = true;
                 req.session.userId = user[0]._id;
-                res.status(200).redirect("/home?err=false");
+                res.status(200).redirect("/home?err=null");
             }
         })
         .catch((error) => {
@@ -613,7 +626,11 @@ app.post("/check-availability", (req, res) => {
         .exec()
         .then((book) => {
             if (book.length < 1) {
-                res.redirect('/new-booking?hallname=' + req.body.hall + '&bookDate=' + req.body.bdate)
+                if (req.body.book) {
+                    return res.redirect('/new-booking?hallname=' + req.body.hall + '&bookDate=' + req.body.bdate)
+                }
+                res.redirect('/home?err=false&booking=' + req.body.bdate);
+
             } else {
                 res.redirect('/home?err=true')
             }
@@ -800,7 +817,9 @@ app.get("/home", (req, res) => {
         Halls.find().select("hallname")
             .exec()
             .then(docs => {
-                res.render('user/home', { hallsData: docs, error: req.query.err })
+
+                console.log(req.query.booking)
+                res.render('user/home', { hallsData: docs, error: req.query.err, booking: req.query.booking })
             })
             .catch(err => {
                 console.log(err)

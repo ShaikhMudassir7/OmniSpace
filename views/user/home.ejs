@@ -75,16 +75,20 @@
                             <div class="alert alert-danger">
                                 <strong>Oops!</strong> The hall is not available on this date, Try another Date!
                             </div>
-                            <% } %>
-                                <div class="col-lg-12">
-                                    <div class="card">
-                                        <div class="card-header">Check Availability</div>
-                                        <div class="card-body">
-                                            <form action="/check-availability" onsubmit="return validate()" method="post" class="needs-validation" novalidate accept-charset="utf-8">
-                                                <div class="row g-2">
-                                                    <div class="mb-3 col-md-6">
-                                                        <label for="hall" class="form-label">Select Hall:</label>
-                                                        <select name="hall" class="form-select" required>
+                            <% } else if(error == "false"){ %>
+                                <div class="alert alert-success">
+                                    <strong>Success!</strong> The hall is available on this date!
+                                </div>
+                                <% } %>
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header">Check Availability</div>
+                                            <div class="card-body">
+                                                <form action="/check-availability" onsubmit="return validate()" method="post" class="needs-validation" novalidate accept-charset="utf-8">
+                                                    <div class="row g-2">
+                                                        <div class="mb-3 col-md-6">
+                                                            <label for="hall" class="form-label">Select Hall:</label>
+                                                            <select name="hall" class="form-select" required>
                                                     <%
                                                         if(hallsData.length!=0){
                                                         var i=1;
@@ -94,18 +98,22 @@
                                                     <%  i++; }) %>
                                                     <% }%>
                                                 </select>
-                                                        <div class="valid-feedback">Looks good!</div>
-                                                        <div class="invalid-feedback">Please select a Hall</div>
+                                                            <div class="valid-feedback">Looks good!</div>
+                                                            <div class="invalid-feedback">Please select a Hall</div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <input id="bdate" value="<%- booking %>" type="text" name="bdate" class="form-control" data-language="en" placeholder="Select a booking date" required>
+                                                        </div>
+                                                        <% console.log('Client: '+booking) %>
                                                     </div>
-                                                    <div class="mb-3">
-                                                        <input id="bdate" type="text" name="bdate" class="form-control datepicker-here" data-language="en" aria-describedby="datepicker" placeholder="Select a booking date" required>
-                                                    </div>
-                                                </div>
-                                                <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Check</button>
-                                            </form>
+                                                    <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Check</button>
+                                                    <% if(error == 'false') { %>
+                                                        <button type="submit" name="book" value="Book" class="btn btn-secondary"><i class="fas fa-check"></i> Book</button>
+                                                        <% } %>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                     </div>
                 </div>
             </div>
@@ -122,7 +130,6 @@
         $('#bdate').datepicker({
             language: 'en',
             minDate: new Date(),
-            dateFormat: 'd/m/yyyy'
         })
 
         function validate() {
