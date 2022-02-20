@@ -11,7 +11,7 @@
     <link href="/vendor/fontawesome/css/brands.min.css" rel="stylesheet">
     <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/master.css" rel="stylesheet">
-    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
 </head>
 
 <body>
@@ -91,14 +91,14 @@
                                         <div class="row g-2">
                                             <div class="mb-3 col-md-6">
                                                 <label for="email" class="form-label">Full Name</label>
-                                                <input type="name" class="form-control" value="<%=adminData.name %>" name="name" placeholder="Full Name" required>
+                                                <input type="name" class="form-control" value="<%=adminData.username %>" name="name" placeholder="Full Name" required>
                                                 <small class="form-text text-muted">Enter user full name.</small>
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">Please enter full name.</div>
                                             </div>
                                             <div class="mb-3 col-md-6">
                                                 <label for="mobile" class="form-label">Mobile Number</label>
-                                                <input type="tel" value="<%=adminData.mobile %>" maxlength="10" pattern="[789][0-9]{9}" class="form-control" name="mobile" placeholder="Mobile Number" required>
+                                                <input type="tel" value="<%=adminData.usermob %>" maxlength="10" pattern="[789][0-9]{9}" class="form-control" name="mobile" placeholder="Mobile Number" required>
                                                 <small class="form-text text-muted">Phone Number must be 10 digits long.</small>
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">Please enter mobile number.</div>
@@ -107,14 +107,14 @@
                                         <div class="row g-2">
                                             <div class="mb-3 col-md-6">
                                                 <label for="email" class="form-label">Email</label>
-                                                <input type="email" value="<%=adminData.email %>" class="form-control" name="email" placeholder="Email" required>
+                                                <input type="email" value="<%=adminData.useremail %>" class="form-control" name="email" placeholder="Email" required>
                                                 <small class="form-text text-muted">Enter a valid email address.</small>
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">Please enter your email address.</div>
                                             </div>
                                             <div class="mb-3 col-md-6">
                                                 <label for="password" class="form-label">Password</label>
-                                                <input type="password" value="<%=adminData.pass %>" class="form-control" name="pass" placeholder="Password" required>
+                                                <input type="password" value="<%=adminData.password %>" class="form-control" name="pass" placeholder="Password" required>
                                                 <small class="form-text text-muted">Your password must be 8-20 characters long, contain letters and numbers only.</small>
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">Please enter your password.</div>
@@ -167,7 +167,7 @@
         element.value = '<%=adminData.role %>';
 
         let branch = document.getElementById('branch');
-        branch.value = '<%=adminData.bname %>';
+        branch.value = '<%=adminData.branch %>';
     </script>
 </body>
 

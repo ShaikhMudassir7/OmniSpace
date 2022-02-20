@@ -19,7 +19,6 @@ const Halls = require("./api/models/halls");
 
 const User = require("./api/models/user");
 const Book = require("./api/models/book");
-const { vary } = require("express/lib/response");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -126,7 +125,7 @@ app.get("/dashboard", (req, res) => {
 
 app.get("/admins", (req, res) => {
     if (req.session.email) {
-        User.find().select("username useremail usermob role branch")
+        User.find().select("_id username useremail usermob role branch")
             .exec()
             .then(docs => {
                 res.render('admin/admins/admins', { adminData: docs })
@@ -161,7 +160,7 @@ app.get("/add-admin", (req, res) => {
 });
 
 app.get("/edit-admin/(:id)", (req, res) => {
-    Admin.findById(req.params.id, (err, doc) => {
+    User.findById(req.params.id, (err, doc) => {
         if (!err) {
             Branch.find().select("bname")
                 .exec()
@@ -212,7 +211,7 @@ app.post("/edit-admin/:adminId", (req, res) => {
 });
 
 app.get("/delete-admin/(:id)", (req, res, next) => {
-    Admin.findByIdAndRemove(req.params.id, (err, doc) => {
+    User.findByIdAndRemove(req.params.id, (err, doc) => {
         if (!err) {
             res.redirect('/admins')
         } else {
