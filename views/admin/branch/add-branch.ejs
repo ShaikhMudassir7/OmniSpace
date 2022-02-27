@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Add Branch | Hall and Ground</title>
-    <link href="vendor/fontawesome/css/fontawesome.min.css" rel="stylesheet">
-    <link href="vendor/fontawesome/css/solid.min.css" rel="stylesheet">
-    <link href="vendor/fontawesome/css/brands.min.css" rel="stylesheet">
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/master.css" rel="stylesheet">
-    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link href="/vendor/fontawesome/css/fontawesome.min.css" rel="stylesheet">
+    <link href="/vendor/fontawesome/css/solid.min.css" rel="stylesheet">
+    <link href="/vendor/fontawesome/css/brands.min.css" rel="stylesheet">
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/master.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
 </head>
 
 <body>
@@ -19,11 +19,11 @@
         <!-- sidebar navigation component -->
         <nav id="sidebar" class="active">
             <div class="sidebar-header">
-                <img src="img/bootstraper-logo.png" height="40px" width="170px" alt="Logo" class="app-logo">
+                <img src="/img/bootstraper-logo.png" alt="bootraper logo" class="app-logo">
             </div>
             <ul class="list-unstyled components text-secondary">
                 <li>
-                    <a href="/dashboard"><i class="fas fa-home"></i> Dashboard</a>
+                    <a href="/admin/dashboard"><i class="fas fa-home"></i>Dashboard</a>
                 </li>
                 <li>
                     <a href="/branch"><i class="fas fa-address-card"></i>Branch</a>
@@ -38,18 +38,18 @@
                     <a href="#reports" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-layer-group"></i> Reports</a>
                     <ul class="collapse list-unstyled" id="reports">
                         <li>
-                            <a href="/pending-payments"><i class="fas fa-angle-right"></i> Pending Payments</a>
+                            <a href="/admin/pending-payments"><i class="fas fa-angle-right"></i> Pending Payments</a>
                         </li>
                         <li>
-                            <a href="/pending-bookings"><i class="fas fa-angle-right"></i> Pending Bookings</a>
+                            <a href="/admin/pending-bookings"><i class="fas fa-angle-right"></i> Pending Bookings</a>
                         </li>
                         <li>
-                            <a href="/booking-reports"><i class="fas fa-angle-right"></i> Booking Reports</a>
+                            <a href="/admin/booking-reports"><i class="fas fa-angle-right"></i> Booking Reports</a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="/admins"><i class="fas fa-user-friends"></i>Users</a>
+                    <a href="/admin/admins"><i class="fas fa-user-friends"></i>Users</a>
                 </li>
             </ul>
         </nav>
@@ -82,12 +82,11 @@
             <div class="content">
                 <div class="container">
                     <div class="row">
-
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">Add new branch</div>
                                 <div class="card-body">
-                                    <form action="/add-branch" method="post" class="needs-validation" novalidate accept-charset="utf-8">
+                                    <form action="/branch/add-branch" method="post" class="needs-validation" novalidate accept-charset="utf-8">
                                         <div class="row g-2">
                                             <div class="mb-3 col-md-6">
                                                 <label for="branchname" class="form-label">Branch Name</label>
@@ -118,10 +117,10 @@
             </div>
         </div>
     </div>
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="js/form-validator.js"></script>
-    <script src="js/script.js"></script>
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/form-validator.js"></script>
+    <script src="/js/script.js"></script>
 </body>
 
 </html>

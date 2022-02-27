@@ -6,24 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Dashboard | Hall and Ground</title>
-    <link href="vendor/fontawesome/css/fontawesome.min.css" rel="stylesheet">
-    <link href="vendor/fontawesome/css/solid.min.css" rel="stylesheet">
-    <link href="vendor/fontawesome/css/brands.min.css" rel="stylesheet">
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/master.css" rel="stylesheet">
-    <link href="vendor/flagiconcss/css/flag-icon.min.css" rel="stylesheet">
-    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link href="/vendor/fontawesome/css/fontawesome.min.css" rel="stylesheet">
+    <link href="/vendor/fontawesome/css/solid.min.css" rel="stylesheet">
+    <link href="/vendor/fontawesome/css/brands.min.css" rel="stylesheet">
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/master.css" rel="stylesheet">
+    <link href="/vendor/flagiconcss/css/flag-icon.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
 </head>
 
 <body>
     <div class="wrapper">
         <nav id="sidebar" class="active">
             <div class="sidebar-header">
-                <img src="img/bootstraper-logo.png" alt="bootraper logo" class="app-logo">
+                <img src="/img/bootstraper-logo.png" alt="bootraper logo" class="app-logo">
             </div>
             <ul class="list-unstyled components text-secondary">
                 <li>
-                    <a href="/dashboard"><i class="fas fa-home"></i>Dashboard</a>
+                    <a href="/admin/dashboard"><i class="fas fa-home"></i>Dashboard</a>
                 </li>
                 <li>
                     <a href="/branch"><i class="fas fa-address-card"></i>Branch</a>
@@ -38,18 +38,18 @@
                     <a href="#reports" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-layer-group"></i> Reports</a>
                     <ul class="collapse list-unstyled" id="reports">
                         <li>
-                            <a href="/pending-payments"><i class="fas fa-angle-right"></i> Pending Payments</a>
+                            <a href="/admin/pending-payments"><i class="fas fa-angle-right"></i> Pending Payments</a>
                         </li>
                         <li>
-                            <a href="/pending-bookings"><i class="fas fa-angle-right"></i> Pending Bookings</a>
+                            <a href="/admin/pending-bookings"><i class="fas fa-angle-right"></i> Pending Bookings</a>
                         </li>
                         <li>
-                            <a href="/booking-reports"><i class="fas fa-angle-right"></i> Booking Reports</a>
+                            <a href="/admin/booking-reports"><i class="fas fa-angle-right"></i> Booking Reports</a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="/admins"><i class="fas fa-user-friends"></i>Users</a>
+                    <a href="/admin/admins"><i class="fas fa-user-friends"></i>Users</a>
                 </li>
             </ul>
         </nav>
@@ -68,7 +68,7 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end nav-link-menu">
                                     <ul class="nav-list">
-                                        <li><a href="/logout-admin" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                                        <li><a href="/admin/logout-admin" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -96,7 +96,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-8">
-                                            <a href="/pending-bookings">
+                                            <a href="/admin/pending-bookings">
                                                 <div class="detail">
                                                     <p class="detail-subtitle">Pending Bookings</p>
                                                     <span class="number"><%=noofbook %></span>
@@ -117,7 +117,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-8">
-                                            <a href="/pending-payments">
+                                            <a href="/admin/pending-payments">
                                                 <div class="detail">
                                                     <p class="detail-subtitle">Pending Payments</p>
                                                     <span class="number"><%=noofpen %></span>
@@ -138,7 +138,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-8">
-                                            <a href="/admins">
+                                            <a href="/admin/admins">
                                                 <div class="detail">
                                                     <p class="detail-subtitle">No of users</p>
                                                     <span class="number"><%=noofusers %></span>
@@ -175,11 +175,11 @@
             </div>
         </div>
     </div>
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/chartsjs/Chart.min.js"></script>
-    <script src="js/dashboard-charts.js"></script>
-    <script src="js/script.js"></script>
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/chartsjs/Chart.min.js"></script>
+    <script src="/js/dashboard-charts.js"></script>
+    <script src="/js/script.js"></script>
 </body>
 
 </html>

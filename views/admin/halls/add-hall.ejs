@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Add Hall | Hall and Ground</title>
-    <link href="vendor/fontawesome/css/fontawesome.min.css" rel="stylesheet">
-    <link href="vendor/fontawesome/css/solid.min.css" rel="stylesheet">
-    <link href="vendor/fontawesome/css/brands.min.css" rel="stylesheet">
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/master.css" rel="stylesheet">
-    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link href="/vendor/fontawesome/css/fontawesome.min.css" rel="stylesheet">
+    <link href="/vendor/fontawesome/css/solid.min.css" rel="stylesheet">
+    <link href="/vendor/fontawesome/css/brands.min.css" rel="stylesheet">
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/master.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
 </head>
 
 <body>
@@ -19,11 +19,11 @@
         <!-- sidebar navigation component -->
         <nav id="sidebar" class="active">
             <div class="sidebar-header">
-                <img src="img/bootstraper-logo.png" height="40px" width="170px" alt="Logo" class="app-logo">
+                <img src="/img/bootstraper-logo.png" alt="bootraper logo" class="app-logo">
             </div>
             <ul class="list-unstyled components text-secondary">
                 <li>
-                    <a href="/dashboard"><i class="fas fa-home"></i> Dashboard</a>
+                    <a href="/admin/dashboard"><i class="fas fa-home"></i>Dashboard</a>
                 </li>
                 <li>
                     <a href="/branch"><i class="fas fa-address-card"></i>Branch</a>
@@ -38,18 +38,18 @@
                     <a href="#reports" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-layer-group"></i> Reports</a>
                     <ul class="collapse list-unstyled" id="reports">
                         <li>
-                            <a href="/pending-payments"><i class="fas fa-angle-right"></i> Pending Payments</a>
+                            <a href="/admin/pending-payments"><i class="fas fa-angle-right"></i> Pending Payments</a>
                         </li>
                         <li>
-                            <a href="/pending-bookings"><i class="fas fa-angle-right"></i> Pending Bookings</a>
+                            <a href="/admin/pending-bookings"><i class="fas fa-angle-right"></i> Pending Bookings</a>
                         </li>
                         <li>
-                            <a href="/booking-reports"><i class="fas fa-angle-right"></i> Booking Reports</a>
+                            <a href="/admin/booking-reports"><i class="fas fa-angle-right"></i> Booking Reports</a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="/admins"><i class="fas fa-user-friends"></i>Users</a>
+                    <a href="/admin/admins"><i class="fas fa-user-friends"></i>Users</a>
                 </li>
             </ul>
         </nav>
@@ -70,7 +70,7 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end nav-link-menu">
                                     <ul class="nav-list">
-                                        <li><a href="/logout-admin" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                                        <li><a href="/admin/logout-admin" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
                             <div class="card">
                                 <div class="card-header">Add new hall</div>
                                 <div class="card-body">
-                                    <form method="post" action="/add-hall" class="needs-validation" novalidate accept-charset="utf-8">
+                                    <form method="post" action="/halls/add-hall" class="needs-validation" novalidate accept-charset="utf-8">
                                         <div class="row g-2">
                                             <div class="mb-3 col-md-6">
                                                 <label for="hallname" class="form-label">Hall Name</label>
@@ -116,13 +116,13 @@
                                         <div class="row g-2">
                                             <div class="mb-3 col-md-6">
                                                 <label for="rent" class="form-label">Hall Rent</label>
-                                                <input id="rent" onblur="calculate()" type="name" class="form-control" name="rent" placeholder="Enter Rent" required>
+                                                <input id="rent" onblur="calculate()" type="number" class="form-control" name="rent" placeholder="Enter Rent" required>
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">Please, enter hall rent.</div>
                                             </div>
                                             <div class="mb-3 col-md-6">
                                                 <label for="security" class="form-label">Security Deposit</label>
-                                                <input type="text" class="form-control" name="security" placeholder="Enter Security Deposit" required>
+                                                <input type="number" class="form-control" name="security" placeholder="Enter Security Deposit" required>
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">Please, enter Security Deposit.</div>
                                             </div>
@@ -130,13 +130,13 @@
                                         <div class="row g-2">
                                             <div class="mb-3 col-md-6">
                                                 <label for="scharge" class="form-label">Service Charges</label>
-                                                <input type="name" class="form-control" name="scharge" placeholder="Enter Service Charges" required>
+                                                <input type="number" class="form-control" name="scharge" placeholder="Enter Service Charges" required>
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">Please, enter Service Charges.</div>
                                             </div>
                                             <div class="mb-3 col-md-6">
                                                 <label for="GSTamount" class="form-label">GST Amount</label>
-                                                <input id="gst" type="name" class="form-control" name="GSTamount" placeholder="Enter GST Amount" required>
+                                                <input id="gst" type="number" class="form-control" name="GSTamount" placeholder="Enter GST Amount" required>
                                                 <div class="valid-feedback">Looks good!</div>
                                                 <div class="invalid-feedback">Please, enter Vendor Website.</div>
                                             </div>

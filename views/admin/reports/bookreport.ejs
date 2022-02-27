@@ -20,11 +20,11 @@
         <!-- sidebar navigation component -->
         <nav id="sidebar" class="active">
             <div class="sidebar-header">
-                <img src="img/bootstraper-logo.png" alt="bootraper logo" class="app-logo">
+                <img src="/img/bootstraper-logo.png" alt="bootraper logo" class="app-logo">
             </div>
             <ul class="list-unstyled components text-secondary">
                 <li>
-                    <a href="/dashboard"><i class="fas fa-home"></i> Dashboard</a>
+                    <a href="/admin/dashboard"><i class="fas fa-home"></i>Dashboard</a>
                 </li>
                 <li>
                     <a href="/branch"><i class="fas fa-address-card"></i>Branch</a>
@@ -39,18 +39,18 @@
                     <a href="#reports" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-layer-group"></i> Reports</a>
                     <ul class="collapse list-unstyled" id="reports">
                         <li>
-                            <a href="/pending-payments"><i class="fas fa-angle-right"></i> Pending Payments</a>
+                            <a href="/admin/pending-payments"><i class="fas fa-angle-right"></i> Pending Payments</a>
                         </li>
                         <li>
-                            <a href="/pending-bookings"><i class="fas fa-angle-right"></i> Pending Bookings</a>
+                            <a href="/admin/pending-bookings"><i class="fas fa-angle-right"></i> Pending Bookings</a>
                         </li>
                         <li>
-                            <a href="/booking-reports"><i class="fas fa-angle-right"></i> Booking Reports</a>
+                            <a href="/admin/booking-reports"><i class="fas fa-angle-right"></i> Booking Reports</a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="/admins"><i class="fas fa-user-friends"></i>Users</a>
+                    <a href="/admin/admins"><i class="fas fa-user-friends"></i>Users</a>
                 </li>
             </ul>
         </nav>
@@ -70,7 +70,7 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end nav-link-menu">
                                     <ul class="nav-list">
-                                        <li><a href="/logout-admin" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                                        <li><a href="/admin/logout-admin" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -149,13 +149,13 @@
                                             </td>
                                             <% if (data.bstatus == "Completed" && data.pstatus == "Completed"){ %>
                                                 <td>
-                                                    <a href="/generate-booking/<%= data._id %>" target="_blank" class="btn btn-outline-success btn-rounded"><i class="fas fa-print"></i></a>
+                                                    <a href="/admin/generate-booking/<%= data._id %>" target="_blank" class="btn btn-outline-success btn-rounded"><i class="fas fa-print"></i></a>
                                                 </td>
                                                 <td>
-                                                    <a href="/generate-decorator/<%= data._id %>" target="_blank" class="btn btn-outline-success btn-rounded"><i class="fas fa-print"></i></a>
+                                                    <a href="/admin/generate-decorator/<%= data._id %>" target="_blank" class="btn btn-outline-success btn-rounded"><i class="fas fa-print"></i></a>
                                                 </td>
                                                 <td>
-                                                    <a href="/generate-caterer/<%= data._id %>" target="_blank" class="btn btn-outline-success btn-rounded"><i class="fas fa-print"></i></a>
+                                                    <a href="/admin/generate-caterer/<%= data._id %>" target="_blank" class="btn btn-outline-success btn-rounded"><i class="fas fa-print"></i></a>
                                                 </td>
                                                 <% } else { %>
                                                     <td></td>
