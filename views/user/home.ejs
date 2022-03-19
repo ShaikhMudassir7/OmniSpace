@@ -29,7 +29,9 @@
                     <a href="/home"><i class="fas fa-home"></i>Home</a>
                 </li>
                 <li>
-                    <a href="#reports" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-layer-group"></i> Reports</a>
+                    <a href="#reports" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down">
+                        <i class="fas fa-layer-group"></i> Bookings
+                    </a>
                     <ul class="collapse list-unstyled" id="reports">
                         <li>
                             <a href="/my-pending-payments"><i class="fas fa-angle-right"></i> Pending Payments</a>
@@ -94,17 +96,16 @@
                                                         var i=1;
                                                         hallsData.forEach(function(data){
                                                     %>
-                                                    <option value="<%=data.hallname %>"><%=data.hallname %></option>
+                                                    <option id="<%=data.hallname %>" value="<%=data.hallname %>"><%=data.hallname %></option>
                                                     <%  i++; }) %>
-                                                    <% }%>
+                                                    <% } %>
                                                 </select>
                                                             <div class="valid-feedback">Looks good!</div>
                                                             <div class="invalid-feedback">Please select a Hall</div>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <input id="bdate" value="<%- booking %>" type="text" name="bdate" class="form-control" data-language="en" placeholder="Select a booking date" required>
+                                                            <input id="bdate" value="<%= booking %>" type="text" name="bdate" class="form-control" data-language="en" placeholder="Select a booking date" required>
                                                         </div>
-                                                        <% console.log('Client: '+booking) %>
                                                     </div>
                                                     <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Check</button>
                                                     <% if(error == 'false') { %>
@@ -138,6 +139,9 @@
                 return false;
             }
         }
+
+
+        document.getElementById("<%= hall %>").selected = true;
     </script>
 </body>
 

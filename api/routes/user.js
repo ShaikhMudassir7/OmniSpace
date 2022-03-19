@@ -38,7 +38,6 @@ router.post("/user-login", (req, res) => {
         })
         .exec()
         .then((user) => {
-            console.log(user)
             if (user.length < 1) {
                 res.status(404).json({
                     message: "User Not found",
@@ -74,10 +73,9 @@ router.post("/check-availability", (req, res) => {
                 if (req.body.book) {
                     return res.redirect('/new-booking?hallname=' + req.body.hall + '&bookDate=' + req.body.bdate)
                 }
-                res.redirect('/home?err=false&booking=' + req.body.bdate);
-
+                res.redirect('/home?err=false&booking=' + req.body.bdate + '&hallname=' + req.body.hall);
             } else {
-                res.redirect('/home?err=true')
+                res.redirect('/home?err=true&hallname=' + req.body.hall)
             }
         })
         .catch((error) => {
@@ -88,11 +86,32 @@ router.post("/check-availability", (req, res) => {
         });
 });
 
+router.get("/home", (req, res) => {
+    if (req.session.loggedin) {
+        Halls.find().select("hallname")
+            .exec()
+            .then(docs => {
+                console.log(req.query.booking)
+                res.render('user/home', { hallsData: docs, error: req.query.err, booking: req.query.booking, hall: req.query.hallname })
+            })
+            .catch(err => {
+                console.log(err)
+                res.status(500).json({
+                    error: err
+                })
+            })
+    } else {
+        res.redirect('/access-not-allowed');
+    }
+});
+
 router.get("/new-booking", (req, res) => {
     if (req.session.loggedin) {
+        console.log(req.query.hallname)
         Halls.find({
-            hall: req.query.hallname
+            hallname: req.query.hallname
         }).exec().then((result) => {
+            console.log(result)
             Vendor.find({
                 type: "Decorator",
             }).select("vendorname").exec().then(deco => {
@@ -109,7 +128,6 @@ router.get("/new-booking", (req, res) => {
 });
 
 router.post("/new-booking", (req, res) => {
-    console.log(req.body)
     var bookData = new Book({
         _id: new mongoose.Types.ObjectId(),
         userID: req.session.userId,
@@ -159,7 +177,6 @@ router.get("/accept-payment/(:id)", (req, res, next) => {
 });
 
 router.post("/accept-payment", payUpload, (req, res, next) => {
-    console.log(req.files.pslip)
     Book.findByIdAndUpdate(req.body.id, { pslip: (req.files.pslip[0].path).toString().substring(6), modeofpayment: req.body.modeofpayment }, (err, doc) => {
         if (!err) {
             res.redirect('/my-pending-payments')
@@ -184,7 +201,6 @@ router.get("/refund-payment/(:id)", (req, res, next) => {
 });
 
 router.post("/refund-payment", refUpload, (req, res, next) => {
-    console.log(req.files.rslip)
     Book.findByIdAndUpdate(req.body.id, { rslip: (req.files.rslip[0].path).toString().substring(6), rstatus: "Completed" }, (err, doc) => {
         if (!err) {
             res.redirect('/my-booking')
@@ -245,26 +261,6 @@ router.get("/my-pending-bookings", (req, res) => {
             .exec()
             .then(docs => {
                 res.render('user/penbooking', { bookData: docs })
-            })
-            .catch(err => {
-                console.log(err)
-                res.status(500).json({
-                    error: err
-                })
-            })
-    } else {
-        res.redirect('/access-not-allowed');
-    }
-});
-
-router.get("/home", (req, res) => {
-    if (req.session.loggedin) {
-        Halls.find().select("hallname")
-            .exec()
-            .then(docs => {
-
-                console.log(req.query.booking)
-                res.render('user/home', { hallsData: docs, error: req.query.err, booking: req.query.booking })
             })
             .catch(err => {
                 console.log(err)
