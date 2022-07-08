@@ -1,7 +1,9 @@
 # Hall and Ground Booking System
 
 ## Hosted site
-https://hallandground.herokuapp.com/
+User: https://hallandground.herokuapp.com/
+<br/>
+Admin: https://hallandground.herokuapp.com/admin
 
 ## Running the Project Locally
 
